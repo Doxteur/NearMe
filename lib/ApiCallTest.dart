@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:getwidget/getwidget.dart';
 
 class APiCallTest extends StatefulWidget {
   const APiCallTest({super.key});
@@ -21,6 +22,7 @@ class _APiCallTestState extends State<APiCallTest> {
   @override
   void initState() {
     apiData = getApiData();
+    print(apiData);
     super.initState();
   }
 
@@ -33,17 +35,25 @@ class _APiCallTestState extends State<APiCallTest> {
             return ListView.builder(
                 itemCount: snapshot.data?.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      child: Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('${snapshot.data?[index]['name']}'),
-                        Text('${snapshot.data?[index]['price']}'),
-                        Text('${snapshot.data?[index]['dsc']}'),
-                      ],
-                    ),
-                  ));
+                  // return Card(
+                  //   child: Column(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       Text('${snapshot.data?[index]['name']}'),
+                  //       Text('${snapshot.data?[index]['price']}'),
+                  //       Text('${snapshot.data?[index]['dsc']}'),
+                  //     ],
+                  //   ),
+                  // );
+                  return GFListTile(
+                      avatar: GFAvatar(
+                        backgroundImage:
+                            NetworkImage('${snapshot.data?[index]['img']}'),
+                      ),
+                      titleText: '${snapshot.data?[index]['name']}',
+                      subTitleText:
+                          '${snapshot.data?[index]['price']} ${snapshot.data?[index]['dsc']}',
+                      icon: const Icon(Icons.favorite));
                 });
           } else {
             return const Placeholder();
